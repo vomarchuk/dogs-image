@@ -1,21 +1,31 @@
 import { useState } from 'react';
+import { toast } from 'react-toastify';
 
-export const SearchBar: React.FC = () => {
+interface IProps {
+  onSubmit: any;
+}
+
+export const SearchBar: React.FC<IProps> = ({ onSubmit }) => {
   const [searchValue, setSearchValue] = useState('');
-  const hundleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
     setSearchValue(e.currentTarget?.value);
   };
-
-  const hundleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log(searchValue);
+    if (searchValue.trim() === '') {
+      return toast('Enter dog breeds');
+    }
+    onSubmit(searchValue);
+    setSearchValue('');
   };
 
   return (
-    <header className="flex bg-slate-500 py-3 px-6 justify-center">
+    <header className="flex bg-blue-300 py-3 px-6 justify-center">
       <form
         className="flex max-w-lg w-[100%] bg-white items-center overflow-hidden rounded-sm"
-        onSubmit={hundleSubmit}
+        onSubmit={handleSubmit}
       >
         <button
           className="inline-block w-12 h-12 bg-slate-200 ease-in duration-300 hover:bg-slate-400 bg-[url('./images/search.png')] bg-[length:40%] bg-no-repeat bg-center opacity-60 "
@@ -29,7 +39,8 @@ export const SearchBar: React.FC = () => {
           className="inline-block text-sm border-none outline-none px-1 w-[100%]"
           type="text"
           placeholder="Search images"
-          onChange={hundleChange}
+          value={searchValue}
+          onChange={handleChange}
         />
       </form>
     </header>

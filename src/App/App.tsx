@@ -1,7 +1,11 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 import { Home, FindDogs } from '../pages';
+
+import { Footer } from '../Components/Footer';
 import './App.css';
-import { Button } from '../Components';
 
 const App: React.FC = () => {
   return (
@@ -10,11 +14,8 @@ const App: React.FC = () => {
         <Route path="/" element={<Home />} />
         <Route path="/find-dogs" element={<FindDogs />} />
       </Routes>
-
-      <footer className="container mx-auto block py-3 text-center bg-blue-300">
-        <Button href="/" name="Home" />
-        <Button href="/find-dogs" name="Find dogs" />
-      </footer>
+      <Footer />
+      <ToastContainer autoClose={3000} />
     </BrowserRouter>
   );
 };
