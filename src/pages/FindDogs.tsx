@@ -3,7 +3,14 @@ import { RotatingLines } from 'react-loader-spinner';
 import { getDogsByBreed } from '../API/api-service';
 import { SearchBar } from '../Components';
 
-const statusOptions = {
+type StatusOptions = {
+  IDLE: string;
+  PENDING: string;
+  RESOLVED: string;
+  REJECTED: string;
+};
+
+const statusOptions: StatusOptions = {
   IDLE: 'idle',
   PENDING: 'pending',
   RESOLVED: 'resolved',
