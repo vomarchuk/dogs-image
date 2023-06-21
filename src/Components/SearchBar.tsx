@@ -1,13 +1,10 @@
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 
-interface IProps {
-  onSubmit: any;
-}
+import { IOnSubmit } from '../models';
 
-export const SearchBar: React.FC<IProps> = ({ onSubmit }) => {
+export const SearchBar: React.FC<IOnSubmit> = ({ onSubmit }) => {
   const [searchValue, setSearchValue] = useState('');
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     setSearchValue(e.currentTarget?.value);

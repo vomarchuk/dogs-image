@@ -1,9 +1,5 @@
-interface IProps {
-  name: string;
-  href: string;
-}
-
-export const Button: React.FC<IProps> = ({ name, href }) => {
+import { INavButton } from '../models';
+export const Button: React.FC<INavButton> = ({ name, href }) => {
   return (
     <a
       href={href}
