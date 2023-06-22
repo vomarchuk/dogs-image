@@ -39,6 +39,7 @@ export const FindDogs = () => {
       return;
     }
     getImages(searchValue);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchValue]);
 
   return (

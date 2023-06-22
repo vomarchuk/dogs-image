@@ -37,10 +37,12 @@ export const Home = () => {
   const getCurrentBreed = (breed: string) => setCurrentBreed(breed);
   const closeModal = () => setLargeImageURL('');
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => getDogsBreed(), []);
 
   useEffect(() => {
     if (currentBreed) getDogImage(currentBreed);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentBreed]);
   return (
     <div className="container mx-auto">
