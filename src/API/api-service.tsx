@@ -1,13 +1,14 @@
 import axios from 'axios';
 axios.defaults.baseURL = 'https://dog.ceo/api';
 
-export const getDogsByBreed = async (breed: string, quantity: string) => {
-  const amountImage = quantity === 'loadMore' ? 3 : 25;
-  // console.log(amountImage);
+export const getDogsByBreed = async (breed: string) => {
+  const { data } = await axios.get(`/breed/${breed}/images`);
+  const result = data?.message;
+  return result;
+};
 
-  const { data } = await axios.get(
-    `/breed/${breed}/images/random/${amountImage}`
-  );
+export const getRandomImages = async () => {
+  const { data } = await axios.get(`/breeds/image/random/50`);
   const result = data?.message;
   return result;
 };
