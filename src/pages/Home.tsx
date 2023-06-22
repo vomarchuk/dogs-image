@@ -1,10 +1,8 @@
 import { useEffect, useState } from 'react';
 import { RotatingLines } from 'react-loader-spinner';
-
 import { getDogByBreed, getListAllBreeds } from '../API/api-service';
 import { STATUS_OPTIONS } from '../CONSTANTS';
-import { BreedsList } from '../Components';
-import { Modal } from '../Components/Modal';
+import { BreedsList, Modal } from '../Components';
 
 export const Home = () => {
   const { PENDING, RESOLVED, REJECTED, IDLE } = STATUS_OPTIONS;
@@ -39,9 +37,7 @@ export const Home = () => {
   const getCurrentBreed = (breed: string) => setCurrentBreed(breed);
   const closeModal = () => setLargeImageURL('');
 
-  useEffect(() => {
-    getDogsBreed();
-  }, []);
+  useEffect(() => getDogsBreed(), []);
 
   useEffect(() => {
     if (currentBreed) getDogImage(currentBreed);

@@ -1,6 +1,5 @@
 import { Tilt } from 'react-tilt';
 import { useInView } from 'react-intersection-observer';
-
 import Skeleton from '@mui/material/Skeleton';
 import { IImageCard } from '../models';
 
@@ -21,9 +20,7 @@ export const ImageCard: React.FC<IImageCard> = ({ imageUrl, openModal }) => {
     threshold: 0.5,
     triggerOnce: true,
   });
-  const handleClick = () => {
-    return openModal(imageUrl);
-  };
+  const handleClick = () => openModal(imageUrl);
 
   return (
     <div ref={ref} className="p-[2px] cursor-pointer">

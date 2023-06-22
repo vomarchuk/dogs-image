@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { toast } from 'react-toastify';
-
 import { IOnSubmit } from '../models';
 
 export const SearchBar: React.FC<IOnSubmit> = ({ onSubmit }) => {

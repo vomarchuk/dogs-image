@@ -1,12 +1,8 @@
 import { useEffect, useState } from 'react';
 import { RotatingLines } from 'react-loader-spinner';
-
 import { getDogsByBreed } from '../API/api-service';
-
-import { SearchBar, ImageGallery } from '../Components';
-
+import { SearchBar, ImageGallery, Modal } from '../Components';
 import { STATUS_OPTIONS } from '../CONSTANTS';
-import { Modal } from '../Components/Modal';
 
 export const FindDogs = () => {
   const { PENDING, RESOLVED, REJECTED, IDLE } = STATUS_OPTIONS;
@@ -32,6 +28,7 @@ export const FindDogs = () => {
   const handlerSearchForm = (query: string) => {
     setStatus(PENDING);
     setSearchValue(query);
+    setArticles([]);
   };
 
   const openModal = (imageUrl: string) => setLargeImageURL(imageUrl);
@@ -39,6 +36,9 @@ export const FindDogs = () => {
 
   useEffect(() => {
     if (searchValue === '') {
+      return;
+    }
+    if (status === REJECTED) {
       return;
     }
     getImages(searchValue);
@@ -60,6 +60,11 @@ export const FindDogs = () => {
       )}
       {status === RESOLVED && (
         <ImageGallery images={articles} openModal={openModal} />
+      )}
+      {status === REJECTED && (
+        <div className="py-10 text-center text-2xl text-red-700">
+          You have entered a non-existent dog breed! Please try again
+        </div>
       )}
       {largeImageURL && (
         <Modal imageUrl={largeImageURL} closeModal={closeModal} />

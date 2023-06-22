@@ -5,7 +5,6 @@ import 'react-toastify/dist/ReactToastify.css';
 import { Home, FindDogs } from '../pages';
 
 import { Footer } from '../Components';
-import './App.css';
 
 const App: React.FC = () => {
   return (

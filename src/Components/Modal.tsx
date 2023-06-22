@@ -1,7 +1,5 @@
 import { createPortal } from 'react-dom';
-
 const modalRoot = document.querySelector('#modal-root');
-
 export const Modal: React.FC<any> = ({ closeModal, imageUrl }) => {
   if (!modalRoot) {
     return null;

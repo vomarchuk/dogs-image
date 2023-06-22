@@ -1,5 +1,4 @@
 import { IImageGallery } from '../models';
-
 import { ImageCard } from './ImageCard';
 
 export const ImageGallery: React.FC<IImageGallery> = ({
