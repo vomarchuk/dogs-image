@@ -7,8 +7,14 @@ export const getDogsByBreed = async (breed: string) => {
   return result;
 };
 
-export const getRandomImages = async () => {
-  const { data } = await axios.get(`/breeds/image/random/50`);
+export const getDogByBreed = async (breed: string) => {
+  const { data } = await axios.get(`/breed/${breed}/images/random`);
+  const result = data?.message;
+  return result;
+};
+
+export const getListAllBreeds = async () => {
+  const { data } = await axios.get(`/breeds/list/all`);
   const result = data?.message;
   return result;
 };

@@ -12,8 +12,20 @@ export interface INavButton {
 
 export interface IImageGallery {
   images: string[];
+  openModal: (value: string) => void;
 }
 
 export interface IOnSubmit {
   onSubmit: (value: string) => void;
+}
+export interface IImageCard {
+  imageUrl: string;
+  openModal: (value: string) => void;
+
+};
+
+export interface IBreedsList {
+  breeds: string[];
+  currentBreed: (value: string) => void;
+
 }

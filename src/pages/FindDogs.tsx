@@ -6,12 +6,14 @@ import { getDogsByBreed } from '../API/api-service';
 import { SearchBar, ImageGallery } from '../Components';
 
 import { STATUS_OPTIONS } from '../CONSTANTS';
+import { Modal } from '../Components/Modal';
 
 export const FindDogs = () => {
   const { PENDING, RESOLVED, REJECTED, IDLE } = STATUS_OPTIONS;
   const [searchValue, setSearchValue] = useState('');
   const [articles, setArticles] = useState<string[]>([]);
   const [status, setStatus] = useState(IDLE);
+  const [largeImageURL, setLargeImageURL] = useState('');
 
   const getImages = (breed: string) => {
     getDogsByBreed(breed)
@@ -31,6 +33,9 @@ export const FindDogs = () => {
     setStatus(PENDING);
     setSearchValue(query);
   };
+
+  const openModal = (imageUrl: string) => setLargeImageURL(imageUrl);
+  const closeModal = () => setLargeImageURL('');
 
   useEffect(() => {
     if (searchValue === '') {
@@ -53,7 +58,12 @@ export const FindDogs = () => {
           />
         </div>
       )}
-      {status === RESOLVED && <ImageGallery images={articles} />}
+      {status === RESOLVED && (
+        <ImageGallery images={articles} openModal={openModal} />
+      )}
+      {largeImageURL && (
+        <Modal imageUrl={largeImageURL} closeModal={closeModal} />
+      )}
     </div>
   );
 };

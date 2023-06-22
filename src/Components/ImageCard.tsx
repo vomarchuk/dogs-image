@@ -2,10 +2,7 @@ import { Tilt } from 'react-tilt';
 import { useInView } from 'react-intersection-observer';
 
 import Skeleton from '@mui/material/Skeleton';
-
-interface IProps {
-  imageUrl: string;
-}
+import { IImageCard } from '../models';
 
 const defaultOptions = {
   reverse: false, // reverse the tilt direction
@@ -19,13 +16,17 @@ const defaultOptions = {
   easing: 'cubic-bezier(.03,.98,.52,.99)', // Easing on enter/exit.
 };
 
-export const ImageCard: React.FC<IProps> = ({ imageUrl }) => {
+export const ImageCard: React.FC<IImageCard> = ({ imageUrl, openModal }) => {
   const { ref, inView } = useInView({
     threshold: 0.5,
     triggerOnce: true,
   });
+  const handleClick = () => {
+    return openModal(imageUrl);
+  };
+
   return (
-    <div ref={ref} className="p-[2px]">
+    <div ref={ref} className="p-[2px] cursor-pointer">
       {inView ? (
         <Tilt
           options={defaultOptions}
@@ -37,6 +38,7 @@ export const ImageCard: React.FC<IProps> = ({ imageUrl }) => {
             className=" w-[100%] h-[260px] object-cover rounded-lg "
             src={imageUrl}
             alt="dogs"
+            onClick={handleClick}
           />
         </Tilt>
       ) : (

@@ -1,23 +1,33 @@
 import { useEffect, useState } from 'react';
 import { RotatingLines } from 'react-loader-spinner';
 
-import { getRandomImages } from '../API/api-service';
+import { getDogByBreed, getListAllBreeds } from '../API/api-service';
 import { STATUS_OPTIONS } from '../CONSTANTS';
-import { ImageGallery } from '../Components';
+import { BreedsList } from '../Components';
+import { Modal } from '../Components/Modal';
 
 export const Home = () => {
   const { PENDING, RESOLVED, REJECTED, IDLE } = STATUS_OPTIONS;
-  const [articles, setArticles] = useState<string[]>([]);
+  const [breeds, setBreeds] = useState<string[]>([]);
   const [status, setStatus] = useState(IDLE);
+  const [currentBreed, setCurrentBreed] = useState('');
+  const [largeImageURL, setLargeImageURL] = useState('');
 
-  console.log(articles);
-
-  const getImages = () => {
-    getRandomImages()
+  const getDogsBreed = () => {
+    getListAllBreeds()
       .then((res) => {
-        setArticles((prevState) => {
-          return [...prevState, ...res];
-        });
+        setBreeds(res);
+        setStatus(RESOLVED);
+      })
+      .catch((error) => {
+        setStatus(REJECTED);
+        console.log(error);
+      });
+  };
+  const getDogImage = (breed: string) => {
+    getDogByBreed(breed)
+      .then((res) => {
+        setLargeImageURL(res);
         setStatus(RESOLVED);
       })
       .catch((error) => {
@@ -26,9 +36,16 @@ export const Home = () => {
       });
   };
 
+  const getCurrentBreed = (breed: string) => setCurrentBreed(breed);
+  const closeModal = () => setLargeImageURL('');
+
   useEffect(() => {
-    getImages();
+    getDogsBreed();
   }, []);
+
+  useEffect(() => {
+    if (currentBreed) getDogImage(currentBreed);
+  }, [currentBreed]);
   return (
     <div className="container mx-auto">
       {status === PENDING && (
@@ -42,7 +59,15 @@ export const Home = () => {
           />
         </div>
       )}
-      {status === RESOLVED && <ImageGallery images={articles} />}
+      {status === RESOLVED && (
+        <BreedsList
+          breeds={Object.keys(breeds)}
+          currentBreed={getCurrentBreed}
+        />
+      )}
+      {largeImageURL && (
+        <Modal imageUrl={largeImageURL} closeModal={closeModal} />
+      )}
     </div>
   );
 };
