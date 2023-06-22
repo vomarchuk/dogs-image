@@ -38,9 +38,6 @@ export const FindDogs = () => {
     if (searchValue === '') {
       return;
     }
-    if (status === REJECTED) {
-      return;
-    }
     getImages(searchValue);
   }, [searchValue]);
 
