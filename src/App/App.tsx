@@ -11,7 +11,7 @@ const App: React.FC = () => {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/find-dogs" element={<FindDogs />} />
+        <Route path="/find" element={<FindDogs />} />
       </Routes>
       <Footer />
       <ToastContainer autoClose={3000} />
