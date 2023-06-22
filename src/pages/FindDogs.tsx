@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useInView } from 'react-intersection-observer';
 import { RotatingLines } from 'react-loader-spinner';
 
 import { getDogsByBreed } from '../API/api-service';
@@ -8,16 +9,24 @@ import { SearchBar, ImageGallery } from '../Components';
 import { STATUS_OPTIONS } from '../CONSTANTS';
 
 export const FindDogs = () => {
+  const { ref, inView } = useInView({
+    threshold: 0,
+  });
+
   const { PENDING, RESOLVED, REJECTED, IDLE } = STATUS_OPTIONS;
   const [searchValue, setSearchValue] = useState('');
-  const [articles, setArticles] = useState<string[]>(['']);
+  const [articles, setArticles] = useState<string[]>([]);
   const [status, setStatus] = useState(IDLE);
 
-  const getImages = (breed: string, quantity: number) => {
+  const getImages = (breed: string, quantity: string) => {
     getDogsByBreed(breed, quantity)
       .then((res) => {
+        // console.log('res', res);
+
         setArticles((prevState) => {
-          return { ...prevState, ...res };
+          // console.log('prevState', prevState);
+
+          return [...prevState, ...res];
         });
         setStatus(RESOLVED);
       })
@@ -32,30 +41,18 @@ export const FindDogs = () => {
     setSearchValue(query);
   };
 
-  const handleScroll = () => {
-    const { scrollTop, clientHeight, scrollHeight } = document.documentElement;
-
-    if (scrollHeight - scrollTop === clientHeight) {
-      // getImages(searchValue, 3);
-      setArticles((prevState) => {
-        console.dir(prevState);
-        return [...prevState, '4:sdasdadas'];
-      });
-    }
-  };
-
   useEffect(() => {
-    window.addEventListener('scroll', handleScroll);
     if (searchValue === '') {
       return;
     }
-
-    getImages(searchValue, 15);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
+    getImages(searchValue, 'load');
   }, [searchValue]);
+
+  useEffect(() => {
+    if (inView) {
+      getImages(searchValue, 'loadMore');
+    }
+  }, [inView]);
   return (
     <div className="container mx-auto">
       <SearchBar onSubmit={handlerSearchForm} />
@@ -71,7 +68,12 @@ export const FindDogs = () => {
           />
         </div>
       )}
-      {status === RESOLVED && <ImageGallery images={articles} />}
+      {status === RESOLVED && (
+        <>
+          <ImageGallery images={articles} />
+          <div className="pb-[50px]" ref={ref}></div>
+        </>
+      )}
     </div>
   );
 };
