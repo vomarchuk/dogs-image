@@ -41,7 +41,10 @@ export const Home = () => {
   useEffect(() => getDogsBreed(), []);
 
   useEffect(() => {
-    if (currentBreed) getDogImage(currentBreed);
+    if (currentBreed) {
+      getDogImage(currentBreed);
+      setCurrentBreed('');
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentBreed]);
   return (
