@@ -3,5 +3,6 @@
     "lazysizes",
     "tailwindcss",
     "toastify"
-  ]
+  ],
+  "cSpell.language": "en,pl-PL,pl"
 }
