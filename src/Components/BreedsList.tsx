@@ -2,7 +2,7 @@ import { IBreedsList } from '../models';
 
 export const BreedsList: React.FC<IBreedsList> = ({ breeds, currentBreed }) => {
   return (
-    <ul className="absolute flex flex-wrap justify-center top-[50%] translate-y-[-50%]">
+    <ul className=" flex flex-wrap justify-center pt-3  pb-28 sm:pb-16">
       {breeds &&
         breeds.map((item, index) => {
           return (
