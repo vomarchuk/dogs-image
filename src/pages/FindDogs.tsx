@@ -26,8 +26,10 @@ export const FindDogs = () => {
   };
 
   const handlerSearchForm = (query: string) => {
+    const validQuery = query.toLowerCase();
+    if (searchValue === validQuery) return;
     setStatus(PENDING);
-    setSearchValue(query);
+    setSearchValue(validQuery);
     setArticles([]);
   };
 
